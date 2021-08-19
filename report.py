@@ -17,7 +17,7 @@ class Report(object):
 
     def report(self):
         loginsuccess = False
-        retrycount = 5
+        retrycount = 1
         while (not loginsuccess) and retrycount:
             session = self.login()
             cookies = session.cookies
@@ -102,7 +102,7 @@ if __name__ == "__main__":
     parser.add_argument('password', help='your CAS password', type=str)
     args = parser.parse_args()
     autorepoter = Report(stuid=args.stuid, password=args.password, data_path=args.data_path)
-    count = 5
+    count = 1
     while count != 0:
         ret = autorepoter.report()
         if ret != False:
