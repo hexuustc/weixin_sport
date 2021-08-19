@@ -8,6 +8,12 @@ import re
 import sys
 import argparse
 from bs4 import BeautifulSoup
+from aip import AipOcr
+ 
+# 定义常量
+APP_ID = '24565086'
+API_KEY = 'tgkntU18fTayWntdivP5jv4G'
+SECRET_KEY = '1GfGV1T0f6AblLSlLTs4KON21IFPIKlH'
 
 class Report(object):
     def __init__(self, stuid, password, data_path):
@@ -17,7 +23,7 @@ class Report(object):
 
     def report(self):
         loginsuccess = False
-        retrycount = 1
+        retrycount = 2
         while (not loginsuccess) and retrycount:
             session = self.login()
             cookies = session.cookies
@@ -35,7 +41,7 @@ class Report(object):
         soup = BeautifulSoup(data, 'html.parser')
         token = soup.find("input", {"name": "_token"})['value']
 
-        with open(self.data_path, "r+") as f:
+        with open(self.data_path, "rb") as f:
             data = f.read()
             data = json.loads(data)
             data["_token"]=token
@@ -79,16 +85,32 @@ class Report(object):
 
     def login(self):
         url = "https://passport.ustc.edu.cn/login?service=http%3A%2F%2Fweixine.ustc.edu.cn%2F2020%2Fcaslogin"
+        
+        session = requests.Session()
+
+        client = AipOcr(APP_ID, API_KEY, SECRET_KEY)
+        image1 = session.get('https://passport.ustc.edu.cn/validatecode.jsp?type=login')
+        image = image1.content
+       
+        res=client.basicGeneral(image);
+        for item in res['words_result']:
+            number = item['words']
+        getform = session.get(url)
+        data = getform.text
+        data = data.encode('ascii','ignore').decode('utf-8','ignore')
+        soup = BeautifulSoup(data, 'html.parser')
+        token = soup.find("input", {"name": "CAS_LT"})['value']
         data = {
             'model': 'uplogin.jsp',
             'service': 'https://weixine.ustc.edu.cn/2020/caslogin',
             'username': self.stuid,
             'password': str(self.password),
             'warn': '',
-            'showCode': '',
+            'showCode': '1',
             'button': '',
+            'LT': number,
+            'CAS_LT': token
         }
-        session = requests.Session()
         session.post(url, data=data)
 
         print("login...")
@@ -102,7 +124,7 @@ if __name__ == "__main__":
     parser.add_argument('password', help='your CAS password', type=str)
     args = parser.parse_args()
     autorepoter = Report(stuid=args.stuid, password=args.password, data_path=args.data_path)
-    count = 1
+    count = 2
     while count != 0:
         ret = autorepoter.report()
         if ret != False:
