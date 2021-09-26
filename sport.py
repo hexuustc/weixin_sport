@@ -23,7 +23,7 @@ class Report(object):
         elif timenow.hour<=23 and timenow.hour>=22:
             step = random.randint(6000,7000) 
         else:
-            step = random.randint(1000,2000)
+            step = random.randint(1500,2000)
         data = {
             'user':self.user,
             'password':self.password,
