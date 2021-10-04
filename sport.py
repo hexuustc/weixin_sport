@@ -4,6 +4,8 @@ import datetime
 import pytz
 import argparse
 import random
+import time
+import hashlib
 
 class Report(object):
     def __init__(self, user, password):
@@ -11,7 +13,7 @@ class Report(object):
         self.password = password
 
     def report(self):
-        url = "http://wannengjun666.xyz/mi.php"
+        url = "https://www.eyeit.cn/API/xm.php"
         timenow = datetime.datetime.now(pytz.timezone('Asia/Shanghai'))
         print(timenow.hour)
         if timenow.hour<=8 and timenow.hour>=7:
@@ -24,14 +26,45 @@ class Report(object):
             step = random.randint(6000,7000) 
         else:
             step = random.randint(1500,2000)
-        data = {
-            'user':self.user,
-            'password':self.password,
-            'step':step
+        step = 4855
+        nowtime = int(time.time())
+        a1 = int(self.user)+666
+        a2 = self.password
+        a3 = step
+        a4 = nowtime
+        string = str(a1)+str(a2)+str(a3)+str(a4)+"123"
+        sing = hashlib.md5(string.encode("utf8")).hexdigest()
+
+        headers = {
+            'authority': 'www.eyeit.cn',
+            'method': 'POST',
+            'path': '/API/xm.php',
+            'scheme': 'https',
+            'accept': 'application/json, text/javascript, */*; q=0.01',
+            'accept-encoding': 'gzip, deflate, br',
+            'accept-language': 'zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
+            'content-length': '102',
+            'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+            'origin': 'http://yiran520.com',
+            'referer': 'http://yiran520.com/',
+            'sec-ch-ua': '"Chromium";v="94", "Microsoft Edge";v="94", ";Not A Brand";v="99"',
+            'sec-ch-ua-mobile': '?0',
+            'sec-ch-ua-platform': '"Windows"',
+            'sec-fetch-dest': 'empty',
+            'sec-fetch-mode': 'cors',
+            'sec-fetch-site': 'cross-site',
+            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Safari/537.36 Edg/94.0.992.31'
         }
-        ret = requests.post(url,data=data)
+
+        data = {
+            'phone':self.user,
+            'password':self.password,
+            'step':step,
+            'sing':sing,
+            'time':nowtime
+        }
+        ret = requests.post(url,data=data,headers=headers)
         status = ret.status_code
-        print(status)
         if status==200:
             print("Sport Success!")
             return True
