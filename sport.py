@@ -33,6 +33,8 @@ class Report(object):
         a4 = nowtime
         string = str(a1)+str(a2)+str(a3)+str(a4)+"123"
         sing = hashlib.md5(string.encode("utf8")).hexdigest()
+        print(sing)
+        print(nowtime)
 
         headers = {
             'authority': 'www.eyeit.cn',
@@ -62,7 +64,10 @@ class Report(object):
             'sing':sing,
             'time':nowtime
         }
+        print('before post')
         ret = requests.post(url,data=data,headers=headers)
+        print('after post')
+        print(ret.status_code)
         status = ret.status_code
         if status==200:
             print("Sport Success!")
