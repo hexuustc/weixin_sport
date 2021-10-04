@@ -26,7 +26,6 @@ class Report(object):
             step = random.randint(6000,7000) 
         else:
             step = random.randint(1500,2000)
-        step = 4855
         nowtime = int(time.time())
         a1 = int(self.user)+666
         a2 = self.password
