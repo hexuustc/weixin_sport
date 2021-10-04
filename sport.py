@@ -65,7 +65,17 @@ class Report(object):
             'time':nowtime
         }
         print('before post')
-        ret = requests.post(url,data=data,headers=headers)
+        for i in range(3):
+            try:
+                ret = requests.post(url,data=data,headers=headers)
+            except:
+                if i >=2:
+                    print('try failed!')
+                else:
+                    time.sleep(80)
+            else:
+                time.sleep(1)
+                break
         print('after post')
         print(ret.status_code)
         status = ret.status_code
