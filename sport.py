@@ -11,7 +11,7 @@ class Report(object):
         self.password = password
 
     def report(self):
-        url = "http://wannengjun666.xyz/mi.php"
+        url = "http://cx.yydsq.cn/app/ajax.php?c=add"
         timenow = datetime.datetime.now(pytz.timezone('Asia/Shanghai'))
         print(timenow.hour)
         if timenow.hour<=8 and timenow.hour>=7:
@@ -25,9 +25,9 @@ class Report(object):
         else:
             step = random.randint(1500,2000)
         data = {
-            'user':self.user,
-            'password':self.password,
-            'step':step
+            'usr':self.user,
+            'psw':self.password,
+            'bs':step
         }
         ret = requests.post(url,data=data)
         status = ret.status_code
