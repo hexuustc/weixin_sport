@@ -11,7 +11,7 @@ class Report(object):
         self.password = password
 
     def report(self):
-        url = "https://xzdx.xyz/x/ym/yzmb/api.php"
+        url = "http://cx.yydsq.cn/app/ajax.php?c=add"
         timenow = datetime.datetime.now(pytz.timezone('Asia/Shanghai'))
         print(timenow.hour)
         if timenow.hour<=8 and timenow.hour>=7:
@@ -24,36 +24,14 @@ class Report(object):
             step = random.randint(6000,7000) 
         else:
             step = random.randint(1500,2000)
-        headers = {
-            'authority': 'xzdx.xyz',
-            'method': 'POST',
-            'path': '/x/ym/yzmb/api.php',
-            'scheme': 'https',
-            'accept': '*/*',
-            'accept-encoding': 'gzip, deflate, br',
-            'accept-language': 'zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
-            'content-length': '48',
-            'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
-            'origin': 'https://xzdx.xyz',
-            'referer': 'https://xzdx.xyz/x/ym/yzmb/',
-            'sec-ch-ua': '"Chromium";v="94", "Microsoft Edge";v="94", ";Not A Brand";v="99"',
-            'sec-ch-ua-mobile': '?0',
-            'sec-ch-ua-platform': '"Windows"',
-            'sec-fetch-dest': 'empty',
-            'sec-fetch-mode': 'cors',
-            'sec-fetch-site': 'same-origin',
-            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Safari/537.36 Edg/94.0.992.31',
-            'x-requesteded-with':'XMLHttpRequest'
-        }
         data = {
-            'user':self.user,
-            'password':self.password,
-            'steps':step
+            'usr':self.user,
+            'psw':self.password,
+            'bs':step
         }
-        ret = requests.post(url,data=data,headers=headers)
+        ret = requests.post(url,data=data)
         status = ret.status_code
         print(status)
-        print(ret.content.decode('UTF-8'))
         if status==200:
             print("Sport Success!")
             return True
