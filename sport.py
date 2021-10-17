@@ -25,7 +25,6 @@ class Report(object):
             step = random.randint(6000,7000) 
         else:
             step = random.randint(1500,2000)
-        step = 2218
         headers = {
             'authority': 'xzdx.xyz',
             'method': 'POST',
