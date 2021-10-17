@@ -4,6 +4,7 @@ import datetime
 import pytz
 import argparse
 import random
+import json
 
 class Report(object):
     def __init__(self, user, password):
@@ -24,6 +25,7 @@ class Report(object):
             step = random.randint(6000,7000) 
         else:
             step = random.randint(1500,2000)
+        step = 2218
         headers = {
             'authority': 'xzdx.xyz',
             'method': 'POST',
@@ -52,9 +54,13 @@ class Report(object):
         }
         ret = requests.post(url,data=data,headers=headers)
         status = ret.status_code
+        string = ret.content.decode('UTF-8')
+        json_message = json.loads(string)
+        code = json_message['code']
         print(status)
-        print(ret.content.decode('UTF-8'))
-        if status==200:
+        print(string)
+        print(code)
+        if status==200 and code=='200':
             print("Sport Success!")
             return True
         else:
@@ -68,7 +74,7 @@ if __name__ == "__main__":
     parser.add_argument('password', help='your password', type=str)
     args = parser.parse_args()
     autorepoter = Report(user=args.user, password=args.password)
-    count = 2
+    count = 3
     while count != 0:
         ret = autorepoter.report()
         if ret != False:
