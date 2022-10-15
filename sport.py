@@ -16,15 +16,15 @@ class Report(object):
         timenow = datetime.datetime.now(pytz.timezone('Asia/Shanghai'))
         print(timenow.hour)
         if timenow.hour<=8 and timenow.hour>=7:
-            step = random.randint(1000,1500)
+            step = random.randint(2000,3000)
         elif timenow.hour<=12 and timenow.hour>=11:
-            step = random.randint(2000,2500)
+            step = random.randint(4000,5000)
         elif timenow.hour<=18 and timenow.hour>=17:
-            step = random.randint(4000,4500) 
+            step = random.randint(8000,9000) 
         elif timenow.hour<=23 and timenow.hour>=22:
-            step = random.randint(6000,7000) 
+            step = random.randint(10000,12000) 
         else:
-            step = random.randint(1500,2000)
+            step = random.randint(1800,2000)
         headers = {
             'authority': 'xzdx.xyz',
             'method': 'POST',
@@ -51,7 +51,7 @@ class Report(object):
             'password':self.password,
             'steps':step
         }
-        ret = requests.post(url,data=data,headers=headers)
+        ret = requests.post(url,data=data,headers=headers,verify=False)
         status = ret.status_code
         string = ret.content.decode('UTF-8')
         json_message = json.loads(string)
