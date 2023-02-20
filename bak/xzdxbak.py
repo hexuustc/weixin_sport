@@ -5,7 +5,6 @@ import pytz
 import argparse
 import random
 import json
-import urllib3
 
 class Report(object):
     def __init__(self, user, password):
@@ -13,7 +12,7 @@ class Report(object):
         self.password = password
 
     def report(self):
-        url = "https://api.kit9.cn/api/xiaomi_sports/api.php"
+        url = "https://xzdx.xyz/x/ym/yzmb/api.php"
         timenow = datetime.datetime.now(pytz.timezone('Asia/Shanghai'))
         print(timenow.hour)
         if timenow.hour<=8 and timenow.hour>=7:
@@ -27,30 +26,30 @@ class Report(object):
         else:
             step = random.randint(1800,2000)
         headers = {
-            'authority': 'api.kit9.cn',
+            'authority': 'xzdx.xyz',
             'method': 'POST',
-            'path': '/api/xiaomi_sports/api.php',
+            'path': '/x/ym/yzmb/api.php',
             'scheme': 'https',
             'accept': '*/*',
             'accept-encoding': 'gzip, deflate, br',
             'accept-language': 'zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
-            'content-length': '49',
+            'content-length': '48',
             'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
-            'origin': 'http://shuabu.wang',
-            'referer': 'http://shuabu.wang',
-            'sec-ch-ua': '"Chromium";v="110", "Microsoft Edge";v="110", ";"Not A(Brand";v="24"',
+            'origin': 'https://xzdx.xyz',
+            'referer': 'https://xzdx.xyz/x/ym/yzmb/',
+            'sec-ch-ua': '"Chromium";v="94", "Microsoft Edge";v="94", ";Not A Brand";v="99"',
             'sec-ch-ua-mobile': '?0',
             'sec-ch-ua-platform': '"Windows"',
             'sec-fetch-dest': 'empty',
             'sec-fetch-mode': 'cors',
-            'sec-fetch-site': 'cross-site',
-            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36 Edg/110.0.1587.41',
+            'sec-fetch-site': 'same-origin',
+            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Safari/537.36 Edg/94.0.992.31',
             'x-requesteded-with':'XMLHttpRequest'
         }
         data = {
-            'mobile':self.user,
+            'user':self.user,
             'password':self.password,
-            'step':step
+            'steps':step
         }
         ret = requests.post(url,data=data,headers=headers,verify=False)
         status = ret.status_code
@@ -60,7 +59,7 @@ class Report(object):
         print(status)
         print(string)
         print(code)
-        if status==200 and code==200:
+        if status==200 and code=='200':
             print("Sport Success!")
             return True
         else:
@@ -73,7 +72,6 @@ if __name__ == "__main__":
     parser.add_argument('user', help='your user name', type=str)
     parser.add_argument('password', help='your password', type=str)
     args = parser.parse_args()
-    urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
     autorepoter = Report(user=args.user, password=args.password)
     count = 3
     while count != 0:
