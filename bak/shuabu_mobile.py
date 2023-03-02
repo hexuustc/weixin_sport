@@ -13,7 +13,7 @@ class Report(object):
         self.password = password
 
     def report(self):
-        url = "https://api.kit9.cn/api/xiaomi_sports/api_email_fixed.php"
+        url = "https://api.kit9.cn/api/xiaomi_sports/api.php"
         timenow = datetime.datetime.now(pytz.timezone('Asia/Shanghai'))
         print(timenow.hour)
         if timenow.hour<=8 and timenow.hour>=7:
@@ -26,16 +26,15 @@ class Report(object):
             step = random.randint(10000,12000) 
         else:
             step = random.randint(1800,2000)
-            #step = 3565
         headers = {
             'authority': 'api.kit9.cn',
             'method': 'POST',
-            'path': '/api/xiaomi_sports/api_email_fixed.php',
+            'path': '/api/xiaomi_sports/api.php',
             'scheme': 'https',
             'accept': '*/*',
             'accept-encoding': 'gzip, deflate, br',
             'accept-language': 'zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
-            'content-length': '56',
+            'content-length': '49',
             'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
             'origin': 'http://shuabu.wang',
             'referer': 'http://shuabu.wang',
@@ -49,7 +48,7 @@ class Report(object):
             'x-requesteded-with':'XMLHttpRequest'
         }
         data = {
-            'email':self.user,
+            'mobile':self.user,
             'password':self.password,
             'step':step
         }
