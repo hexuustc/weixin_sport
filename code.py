@@ -584,7 +584,7 @@ if __name__ == "__main__":
     elif timenow.hour<=23 and timenow.hour>=22:
         step = random.randint(10000,12000) 
     else:
-        step = random.randint(4020,4058)
+        step = random.randint(4058,4072)
     step = str(step)
     
     user_list = user.split('#')
