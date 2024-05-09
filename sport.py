@@ -53,8 +53,8 @@ class Report(object):
             'password':self.password,
             'step':step
         }
-        print("user: "+ self.user)
-        print("password: "+ self.password)
+        # print("user: "+ self.user)
+        # print("password: "+ self.password)
         ret = requests.post(url,data=data,headers=headers,verify=False)
         status = ret.status_code
         string = ret.content.decode('UTF-8')

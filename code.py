@@ -93,12 +93,12 @@ def main(_user, _passwd, _step):
         print("已设置为随机步数（10000-19999）")
         _step = str(random.randint(10000, 19999))
         
-    print("_user: "+_user)
-    print("password: "+password)
-    print("_step: "+_step)
+    # print("_user: "+_user)
+    # print("password: "+password)
+    # print("_step: "+_step)
     login_token, userid = login(_user, password)
-    print("login_token: "+login_token)
-    print("userid"+userid)
+    # print("login_token: "+str(login_token))
+    # print("userid"+str(userid))
     if login_token == 0:
         print("登陆失败！")
         return "login fail!"
