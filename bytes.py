@@ -1,9 +1,18 @@
 import json
-a=b'{"code":"400","msg":"\xe6\x8f\x90\xe4\xba\xa4\xe5\xa4\xb1\xe8\xb4\xa5,\xe8\xaf\xb7\xe6\xa3\x80\xe6\x9f\xa5\xe8\xb4\xa6\xe5\x8f\xb7\xe5\xaf\x86\xe7\xa0\x81,\xe5\x8b\xbf\xe9\xa2\x91\xe7\xb9\x81\xe6\x8f\x90\xe4\xba\xa4\xef\xbc\x81","res":[]}'
+a=b"\xe8\x8b\xb9\xe6\x9e\x9c"
 k=a.decode('UTF-8')
+print(k)
+c = "hhh"
+d = k.encode("UTF-8")
+print(d)
+
+dst = '苹果'.encode('utf-8')
+print(dst)
+print(dst.decode('utf-8'))
+'''
 json=json.loads(k)
 code = json["code"]
 print(k)
 print(code)
 if code=='400':
-    print('ddd')
+    print('ddd')'''
