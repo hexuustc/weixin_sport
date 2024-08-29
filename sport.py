@@ -16,7 +16,7 @@ class Report(object):
         url = "https://api.kit9.cn/api/xiaomi_sports/api_email_fixed.php"
         timenow = datetime.datetime.now(pytz.timezone('Asia/Shanghai'))
         print(timenow.hour)
-        if timenow.hour<=8 and timenow.hour>=7:
+        if timenow.hour<=10 and timenow.hour>=7:
             step = random.randint(2000,3000)
         elif timenow.hour<=12 and timenow.hour>=11:
             step = random.randint(4000,5000)
