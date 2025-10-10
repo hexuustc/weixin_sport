@@ -58,6 +58,8 @@ class Report(object):
         ret = requests.post(url,data=data,verify=False)
         status = ret.status_code
         string = ret.content.decode('UTF-8')
+        print("Response text:")
+        print(string)
         json_message = json.loads(string)
         code = json_message['status']
         print(status)
