@@ -13,7 +13,7 @@ class Report(object):
         self.password = password
 
     def report(self):
-        url = "https://api.kit9.cn/api/xiaomi_sports/api_email_fixed.php"
+        url = "https://steps.hubp.de/api"
         timenow = datetime.datetime.now(pytz.timezone('Asia/Shanghai'))
         print(timenow.hour)
         if timenow.hour<=10 and timenow.hour>=7:
@@ -25,20 +25,20 @@ class Report(object):
         elif timenow.hour<=23 and timenow.hour>=22:
             step = random.randint(10000,12000) 
         else:
-            step = random.randint(1800,2000)
-            #step = 3565
+            step = random.randint(4058,4072)
+            # step = 6500
         headers = {
-            'authority': 'api.kit9.cn',
+            'authority': 'steps.hubp.de',
             'method': 'POST',
-            'path': '/api/xiaomi_sports/api_email_fixed.php',
+            'path': '/api',
             'scheme': 'https',
             'accept': '*/*',
-            'accept-encoding': 'gzip, deflate, br',
+            'accept-encoding': 'gzip, deflate, br, zstd',
             'accept-language': 'zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
-            'content-length': '56',
-            'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
-            'origin': 'http://shuabu.wang',
-            'referer': 'http://shuabu.wang',
+            'content-length': '351',
+            'content-type': 'multipart/form-data; boundary=----WebKitFormBoundaryDbGCbgiS0Wz6jtcR',
+            'origin': 'https://steps.hubp.de',
+            'referer': 'https://steps.hubp.de/',
             'sec-ch-ua': '"Chromium";v="110", "Microsoft Edge";v="110", ";"Not A(Brand";v="24"',
             'sec-ch-ua-mobile': '?0',
             'sec-ch-ua-platform': '"Windows"',
@@ -49,21 +49,21 @@ class Report(object):
             'x-requesteded-with':'XMLHttpRequest'
         }
         data = {
-            'email':self.user,
+            'account':self.user,
             'password':self.password,
-            'step':step
+            'steps':step
         }
         # print("user: "+ self.user)
         # print("password: "+ self.password)
-        ret = requests.post(url,data=data,headers=headers,verify=False)
+        ret = requests.post(url,data=data,verify=False)
         status = ret.status_code
         string = ret.content.decode('UTF-8')
         json_message = json.loads(string)
-        code = json_message['code']
+        code = json_message['status']
         print(status)
         print(string)
         print(code)
-        if status==200 and code==200:
+        if status==200 and code=="success":
             print("Sport Success!")
             return True
         else:

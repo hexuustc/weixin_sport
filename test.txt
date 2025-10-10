@@ -1,1 +1,2 @@
 苹果
+python code.py off 0 "$USER" "$PASSWORD"

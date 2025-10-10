@@ -29,5 +29,5 @@ jobs:
         USER: ${{ secrets.User }}
         PASSWORD: ${{ secrets.Password }}
       run: |
-        python code.py off 0 "$USER" "$PASSWORD"
+        python sport.py "$USER" "$PASSWORD"
 
