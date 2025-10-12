@@ -565,13 +565,13 @@ if __name__ == "__main__":
     if timenow.hour<=10 and timenow.hour>=7:
         step = random.randint(2000,3000)
     elif timenow.hour<=12 and timenow.hour>=11:
-        step = random.randint(4000,5000)
+        step = random.randint(5000,6000)
     elif timenow.hour<=18 and timenow.hour>=17:
-        step = random.randint(8000,9000) 
-    elif timenow.hour<=23 and timenow.hour>=22:
         step = random.randint(10000,12000) 
+    elif timenow.hour<=23 and timenow.hour>=22:
+        step = random.randint(13000,15000) 
     else:
-        step = random.randint(4058,4072)
+        step = random.randint(5058,5072)
     step = str(step)
     
     user_list = user.split('#')
