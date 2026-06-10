@@ -28,6 +28,51 @@ def fake_ip():
     # 随便找的国内IP段：223.64.0.0 - 223.117.255.255
     return f"{223}.{random.randint(64, 117)}.{random.randint(0, 255)}.{random.randint(0, 255)}"
 
+
+def get_step_by_time():
+    """
+    根据当前时间线性插值计算步数（过0点重置）
+    关键时间点（北京时间）:
+      0:00  -> 500     （每日重置，基础值500避免负数）
+      7:00  -> 2000    10:00 -> 3000
+      11:00 -> 5000    12:00 -> 6000
+      17:00 -> 10000   18:00 -> 12000
+      22:00 -> 13000   23:00 -> 15000
+    其他时间在相邻关键点之间线性插值
+    """
+    now = datetime.datetime.now(pytz.timezone('Asia/Shanghai'))
+    hour = now.hour + now.minute / 60.0
+
+    # 定义关键时间点: (小时, 步数)，0点重置为500
+    keypoints = [
+        (0,  500),
+        (7,  2000),
+        (10, 3000),
+        (11, 5000),
+        (12, 6000),
+        (17, 10000),
+        (18, 12000),
+        (22, 13000),
+        (23, 15000),
+    ]
+
+    # 深夜时段（最后一个关键点之后到24点），维持在最后关键点的步数
+    if hour >= keypoints[-1][0]:
+        base = keypoints[-1][1]
+        return int(base + random.randint(-200, 1000))
+
+    # 正常插值：找到当前 hour 所在的区间 [keypoints[i], keypoints[i+1])
+    for i in range(len(keypoints) - 1):
+        h0, s0 = keypoints[i]
+        h1, s1 = keypoints[i + 1]
+        if h0 <= hour < h1:
+            ratio = (hour - h0) / (h1 - h0)
+            base = s0 + (s1 - s0) * ratio
+            return int(base + random.randint(-200, 1000))
+
+    # fallback（不应到这里）
+    return random.randint(5000, 6000)
+
 def get_code(location):
     """
     获取登录code
@@ -560,19 +605,8 @@ if __name__ == "__main__":
         print("参数有误: " + str(e))
         exit(1)
 
-    timenow = datetime.datetime.now(pytz.timezone('Asia/Shanghai'))
-    print(timenow.hour)
-    if timenow.hour<=10 and timenow.hour>=7:
-        step = random.randint(2000,3000)
-    elif timenow.hour<=12 and timenow.hour>=11:
-        step = random.randint(5000,6000)
-    elif timenow.hour<=18 and timenow.hour>=17:
-        step = random.randint(10000,12000) 
-    elif timenow.hour<=23 and timenow.hour>=22:
-        step = random.randint(13000,15000) 
-    else:
-        step = random.randint(5058,5072)
-    step = str(step)
+    step = str(get_step_by_time())
+    print(f"当前北京时间步数: {step}")
     
     user_list = user.split('#')
     passwd_list = passwd.split('#')
